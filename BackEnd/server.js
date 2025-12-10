@@ -15,11 +15,15 @@ app.use(cors());
 // Connect to MongoDB
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
+    await mongoose.connect(process.env.MONGODB_URI, {
+      connectTimeoutMS: 5000,
+      serverSelectionTimeoutMS: 5000,
+    });
     console.log('MongoDB connected successfully');
   } catch (err) {
     console.error('MongoDB connection failed:', err.message);
-    process.exit(1);
+    console.log('⚠ Starting server without database - auth will not persist data');
+    console.log('To use the full auth system, ensure MongoDB is running on localhost:27017');
   }
 };
 

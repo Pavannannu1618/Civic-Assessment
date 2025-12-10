@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './AuthForms.css'
 import authService from '../services/authService'
 
-const Login = ({ onClose, onSwitchToSignUp }) => {
+const Login = ({ onClose, onSwitchToSignUp, onLoginSuccess }) => {
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [errors, setErrors] = useState({})
   const [submitted, setSubmitted] = useState(false)
@@ -36,6 +36,7 @@ const Login = ({ onClose, onSwitchToSignUp }) => {
         setTimeout(() => {
           setSubmitted(false)
           setFormData({ email: '', password: '' })
+          if (onLoginSuccess) onLoginSuccess()
           onClose()
         }, 1500)
       } catch (error) {
